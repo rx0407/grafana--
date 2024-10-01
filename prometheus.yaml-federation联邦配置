@@ -16,3 +16,6 @@
     static_configs:
     - targets:
         - '172.31.16.12:32398' ### k8s内的prometheuse nodeport
+
+
+######注意有格式问题，一定要拷贝到本地文本############

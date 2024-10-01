@@ -1,0 +1,10 @@
+
+K8S:
+1、Title:
+K8S Nodes Machine-Memory
+
+(node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes+node_memory_Cached_bytes ))/node_memory_MemTotal_bytes * 100
+
+Description: K8S Nodes Machine-Memory {{ $labels.instance }} 使用率大于85%，当前值：{{ index $values "B" }}%
+
+

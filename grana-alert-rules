@@ -7,3 +7,7 @@ Description: K8S Nodes Machine-Memory {{ $labels.instance }} 使用率大于85%�
 2、Title: K8s Nodes CPU Usage Alerts
 PromQL: 100 -avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance,job) * 100
 Description:  The Dev K8S Node {{ $labels.instance }} CPU Usage is Over 85%. Current Value is: {{ index $values "B" }}%
+
+2、Title: K8S Nodes Machine-Disk
+PromQL:  (node_filesystem_size_bytes - node_filesystem_free_bytes)/node_filesystem_size_bytes * 100
+Description:   K8S Nodes Machine-Disk 使用率大于85%，当前值：{{ index $values "B" }}%

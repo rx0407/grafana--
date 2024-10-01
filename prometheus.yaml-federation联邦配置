@@ -9,10 +9,7 @@
        - '{job="apiserver"}'
        - '{job="node-exporter"}'
        - '{job="kube-state-metrics"}'
-       - '{job="kubelet"}'
-       - '{job="kube-proxy"}'
-       - '{job="kube-coredns"}'
-
+       - '{endpoint="http-metrics"}'
     static_configs:
     - targets:
         - '172.31.16.12:32398' ### k8s内的prometheuse nodeport

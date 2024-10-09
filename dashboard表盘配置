@@ -1,0 +1,5 @@
+1、变量配置 (dashboard json文件来自于 Rancher/pod)
+  
+datasource： prometheus	
+namespace： label_values(kube_namespace_created{job="rke-a-prom"}, exported_namespace) ##这个exported_namespace 取决于kube_namespace_created里获取到的标签数据，如果是namespace，则将exported_namespace变为namespace
+pod: label_values(kube_pod_info{job="rke-a-prom", exported_namespace="${namespace}"}, pod)  

@@ -58,3 +58,11 @@ Description:   pod在1h内重启次数超过1次
     annotations:
       summary: "{{ $labels.project }} 实例 {{ $labels.instance }} 磁盘IO使用率过高"
       description:  "该设备文件系统使用率已超过阈值，当前值: {{ $value }}%."
+
+
+  - alert: "网卡流出速率大于 10MB/s"
+    expr: (irate(node_network_transmit_bytes_total{device!~"lo"}[1m]) / 1000) > 1000000
+    for: 30s
+    annotations:
+      sumary: "服务器实例 {{ $labels.instance }} 网卡流量负载 告警通知"
+      description: "{{ $labels.instance }}网卡 {{ $labels.device }} 流量已经超过 10MB/s, 当前值: {{ $value }}"

@@ -18,6 +18,11 @@ Description:  The Dev K8S Node {{ $labels.instance }} CPU Usage is Over 85%. Cur
 PromQL:  (node_filesystem_size_bytes - node_filesystem_free_bytes)/node_filesystem_size_bytes * 100
 Description:   K8S Nodes Machine-Disk 使用率大于85%，当前值：{{ index $values "B" }}%
 
+方法二： 
+ceil(100 - ((sum(node_filesystem_avail_bytes{job="rke-a-prom", device!~"rootfs"}) by (exported_instance, mountpoint) * 100) 
+  / sum(node_filesystem_size_bytes{job="rke-a-prom", device!~"rootfs"}) by (exported_instance, mountpoint)))
+
+
 4、Title: k8s Pod Restart 
 PromQL: increase(kube_pod_container_status_restarts_total[1h])
 Description:   pod在1h内重启次数超过1次

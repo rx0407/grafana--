@@ -26,3 +26,35 @@ ceil(100 - ((sum(node_filesystem_avail_bytes{job="rke-a-prom", device!~"rootfs"}
 4、Title: k8s Pod Restart 
 PromQL: increase(kube_pod_container_status_restarts_total[1h])
 Description:   pod在1h内重启次数超过1次
+
+
+
+-------------
+-------------
+--------------------------
+------------- 备份用，还未测试使用过 -------------
+--------------------------
+--------------------------
+--------------------------
+
+
+  - alert: "磁盘读 I/O 超过 30MB/s"
+    expr: irate(node_disk_read_bytes_total{device="sda"}[1m]) > 30000000
+    for: 30s
+    annotations:
+      sumary: "服务器实例 {{ $labels.instance }} I/O 读负载 告警通知"
+      description: "{{ $labels.instance }}I/O 每分钟读已超过 30MB/s,当前值: {{ $value }}"
+  - alert: "磁盘写 I/O 超过 30MB/s"
+    expr: irate(node_disk_written_bytes_total{device="sda"}[1m]) > 30000000
+    for: 30s
+    annotations:
+      sumary: "服务器实例 {{ $labels.instance }} I/O 写负载 告警通知"
+      description: "{{ $labels.instance }}I/O 每分钟写已超过 30MB/s,当前值: {{ $value }}"
+  - alert: IO使用率>=90
+    expr: 100 - avg(irate(node_disk_io_time_seconds_total{job="rke-a-prom", device="dm-0"}[1m])) by(exported_instance)* 100 <= 90 ##增加了job标签
+    for: 8m
+    labels:
+      severity: "严重的，服务器可能在备份，如果不是备份需要排查"
+    annotations:
+      summary: "{{ $labels.project }} 实例 {{ $labels.instance }} 磁盘IO使用率过高"
+      description:  "该设备文件系统使用率已超过阈值，当前值: {{ $value }}%."

@@ -41,7 +41,13 @@ PromQL: sum(irate(node_disk_written_bytes_total{job="rke-a-prom", device=~"[a-z]
 备注：这是查出来的数据，需要在Pannel C增加上告警数值 10000000 （这个单位是字节）
 
 
+5、Title: K8S Nodes Network ReceiveIn Traffice over 10Mb In 5mins
+PromQL: sum(irate(node_network_receive_bytes_total{job="rke-a-prom"}[5m])) by (host_ip, device) / (1024 * 1024)
+Description: K8S Nodes  {{ $labels.host_ip }} NetworkIn traffice Over 10Mb in 5mins，当前值：{{ index $values "B" }}%
 
+5、Title: K8S Nodes Network SendOut Traffice over 50Mb In 5mins
+PromQL: sum(irate(node_network_transmit_bytes_total{job="rke-a-prom"}[5m])) by (host_ip, device) / (1024 * 1024)
+Description: K8S Nodes  {{ $labels.host_ip }} Network Sendout traffice Over 50Mb in 5mins，当前值：{{ index $values "B" }}%
 -------------
 -------------
 --------------------------

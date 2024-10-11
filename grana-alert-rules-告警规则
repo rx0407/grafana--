@@ -36,6 +36,9 @@ ceil(100 - ((sum(node_filesystem_avail_bytes{job="rke-a-prom", device!~"rootfs"}
 4、Title: k8s Pod Restart 
 PromQL: increase(kube_pod_container_status_restarts_total[1h])
 Description:   pod在1h内重启次数超过1次
+方法二：
+sum(increase(kube_pod_container_status_restarts_total{job="rke-a-prom"}[1h])) 
+by (pod, node, container)
 
 5、Title: K8S Nodes Disk IO over 10M In 5mins
 PromQL: sum(irate(node_disk_written_bytes_total{job="rke-a-prom", device=~"[a-z]*[a-z]"}[5m])) 

@@ -27,6 +27,11 @@ ceil(100 - ((sum(node_filesystem_avail_bytes{job="rke-a-prom", device!~"rootfs"}
 PromQL: increase(kube_pod_container_status_restarts_total[1h])
 Description:   pod在1h内重启次数超过1次
 
+5、Title: K8S Nodes Disk IO over 10M In 5mins
+PromQL: sum(irate(node_disk_written_bytes_total{job="rke-a-prom", device=~"[a-z]*[a-z]"}[5m])) 
+  by (exported_instance, device)
+备注：这是查出来的数据，需要在Pannel C增加上告警数值 10000000 （这个单位是字节）
+
 
 
 -------------

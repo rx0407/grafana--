@@ -1,5 +1,13 @@
 
 K8S:
+
+0、Title: K8s Nodes Offline Alert   
+PromQL: count:up1  ### up1 means online status; up0 means offline status
+Description: K8S Nodes Node {{ $labels.instance }} is OFFLINE ，当前值：{{ index $values "B" }}%. Please check
+
+方法二：count(up{job="rke-a-prom"}) by (host_ip)
+
+
 1、Title: K8S Nodes Machine-Memory
 (node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes+node_memory_Cached_bytes ))/node_memory_MemTotal_bytes * 100
 Description: K8S Nodes Machine-Memory {{ $labels.instance }} 使用率大于85%，当前值：{{ index $values "B" }}%
